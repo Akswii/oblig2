@@ -26,7 +26,7 @@ public class Oblig2Test
     antallFeil += oppgave3();
     antallFeil += oppgave4();
     antallFeil += oppgave5();
-    //antallFeil += oppgave6();
+    antallFeil += oppgave6();
     //antallFeil += oppgave7();
     //antallFeil += oppgave8();
     //antallFeil += oppgave9();
@@ -884,6 +884,7 @@ public class Oblig2Test
       System.out.println("Oppgave 6gb: Feil i antall-oppdateringen i fjern(indeks)!");
       System.out.println("             Reduseres ikke antall? Reduserers den to ganger!");
     }
+    
 
     liste.fjern(0);  // fjerner A
     liste.fjern(4);  // fjerner G
@@ -908,10 +909,11 @@ public class Oblig2Test
 
     liste.leggInn("H");
     liste.leggInn("I");
-
-    if (liste.fjern(" ") == true
-        || liste.fjern("G") == true
+    
+    System.out.println(liste);
+    if (liste.fjern("G") == true
         || liste.fjern("J") == true)
+          System.out.println(liste);
     {
       antallFeil++;
       System.out.println("Oppgave 6ka: Feil returverdi i metoden fjern(T)!");

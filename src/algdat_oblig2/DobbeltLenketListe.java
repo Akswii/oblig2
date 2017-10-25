@@ -238,31 +238,72 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public boolean fjern(T verdi) {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        int indeks = 0;
+        Node<T> p = hode, nyHale, nyttHode, nyF, nyN;
+        int i = 0;
+        for (; i < antall-1 && p.verdi != verdi; i++) {
+            indeks++;
+        }
+        if(i == indeks)return false;
+        if (indeks < 0 || indeks > antall - 1) {
+            return false;
+        }
+        System.out.println(indeks);
+
+        if (indeks == 0) {
+            nyttHode = hode.neste;
+            System.out.println("hei3");
+            nyttHode.forrige = null;
+            hode = nyttHode;
+            antall--;
+            return true;
+        } else if (indeks > 0 && indeks < antall - 1) {
+            nyF = p.forrige;
+            System.out.println("hei2");
+            nyN = p.neste;
+            nyF.neste = nyN;
+            nyN.forrige = nyF;
+            antall--;
+            return true;
+
+        } else if (indeks == antall - 1) {
+            nyHale = hale.forrige;
+            System.out.println("hei");
+            System.out.println(antall);
+            nyHale.neste = null;
+            hale = nyHale;
+            antall--;
+            return true;
+        }
+        return false;
     }
 
     @Override
     public T fjern(int indeks) {
+        if (indeks < 0 || indeks > antall - 1) {
+            throw new IndexOutOfBoundsException("Indeks er feil");
+        }
         Node<T> p = finnNode(indeks), nyHale, nyttHode, nyF, nyN;
         T returverdi = p.verdi;
-        
-        if(indeks == 0){
+
+        if (indeks == 0) {
             nyttHode = hode.neste;
             nyttHode.forrige = null;
             hode = nyttHode;
-        }
-        else if(indeks > 0 && indeks < antall){
-            nyF = p.forrige; nyN = p.neste;
+            antall--;
+        } else if (indeks > 0 && indeks < antall - 1) {
+            nyF = p.forrige;
+            nyN = p.neste;
             nyF.neste = nyN;
             nyN.forrige = nyF;
-            
-        }
-        else if(indeks == antall) {
+            antall--;
+        } else if (indeks == antall - 1) {
             nyHale = hale.forrige;
             nyHale.neste = null;
             hale = nyHale;
+            antall--;
         }
-        
+
         return returverdi;
     }
 
