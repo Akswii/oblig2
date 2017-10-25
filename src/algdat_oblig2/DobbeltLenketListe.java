@@ -65,7 +65,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         for (; i < a.length && a[i] == null; i++);
 
         if (i < a.length) {
-            Node<T> p = hode =  new Node<>(a[i], null, null);  // den første noden
+            Node<T> p = hode = new Node<>(a[i], null, null);  // den første noden
             antall = 1;                                 // vi har minst en node
             Node<T> temp;
             for (i++; i < a.length; i++) {
@@ -98,7 +98,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
         return false;
     }
-    public Node<T> getHode(){
+
+    public Node<T> getHode() {
         return hode;
     }
 
@@ -149,11 +150,46 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        StringBuilder utskrift = new StringBuilder("[");
+
+        if (tom()) {
+            utskrift.append("]");
+            return utskrift.toString();
+        }
+
+        Node<T> p = hode;
+
+        while (p.neste != null) {
+            utskrift.append(p.verdi);
+            utskrift.append(", ");
+            p = p.neste;
+        }
+
+        utskrift.append(p.verdi);
+        utskrift.append("]");
+
+        return utskrift.toString();
     }
 
     public String omvendtString() {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        StringBuilder utskrift = new StringBuilder("[");
+        if (tom()) {
+            utskrift.append("]");
+            return utskrift.toString();
+        }
+
+        Node<T> p = hale;
+
+        while (p.forrige != null) {
+            utskrift.append(p.verdi);
+            utskrift.append(", ");
+            p = p.forrige;
+        }
+
+        utskrift.append(p.verdi);
+        utskrift.append("]");
+
+        return utskrift.toString();
     }
 
     public static <T> void sorter(Liste<T> liste, Comparator<? super T> c) {
