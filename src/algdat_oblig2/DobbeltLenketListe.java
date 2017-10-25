@@ -99,13 +99,24 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         return false;
     }
 
-    public Node<T> getHode() {
-        return hode;
-    }
-
     @Override
     public boolean leggInn(T verdi) {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        Objects.requireNonNull(verdi, "Tom tabell!");
+        
+        if(tom()){
+            Node<T> p = new Node<>(verdi, null, null);
+            hode = hale = p;
+            antall++;
+            endringer++;
+            return true;
+        }
+        
+        Node<T> p = new Node<>(verdi, hale, null);
+        hale.neste = p;
+        hale = p;
+        antall++;
+        endringer++;
+        return true;
     }
 
     @Override
