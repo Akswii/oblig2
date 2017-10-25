@@ -12,8 +12,8 @@ package algdat_oblig2;
 public class Main {
 
     public static void main(String[] args) {
-        Character[] c = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',};
-        DobbeltLenketListe<Character> liste = new DobbeltLenketListe<>(c);
-        System.out.println(liste.inneholder('X'));
+        Integer[] c = {};
+        DobbeltLenketListe<Integer> liste = new DobbeltLenketListe<>(c);
+        System.out.println(liste.toString());
     }
 }
