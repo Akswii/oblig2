@@ -45,7 +45,24 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     // hjelpemetode
 
     private Node<T> finnNode(int indeks) {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        int teller = 0;
+        Node<T> p;
+        if (indeks < (antall / 2)) {
+            p = hode;
+            while (teller < indeks && teller != indeks) {
+                p = p.neste;
+                teller++;
+            }
+        } else {
+            teller = antall;
+            p = hale;
+
+            while (teller > indeks && teller != indeks) {
+                p = p.neste;
+                teller--;
+            }
+        }
+        return p;
     }
     // konstruktør
 
@@ -102,15 +119,15 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     @Override
     public boolean leggInn(T verdi) {
         Objects.requireNonNull(verdi, "Tom tabell!");
-        
-        if(tom()){
+
+        if (tom()) {
             Node<T> p = new Node<>(verdi, null, null);
             hode = hale = p;
             antall++;
             endringer++;
             return true;
         }
-        
+
         Node<T> p = new Node<>(verdi, hale, null);
         hale.neste = p;
         hale = p;
