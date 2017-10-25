@@ -54,7 +54,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
                 teller++;
             }
         } else {
-            teller = antall-1;
+            teller = antall - 1;
             p = hale;
 
             while (teller > indeks && teller != indeks) {
@@ -97,10 +97,39 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
 
     }
+
     // subliste
+    private static void fratilKontroll(int tablengde, int fra, int til) {
+        if (fra < 0) // fra er negativ
+        {
+            throw new IndexOutOfBoundsException("fra(" + fra + ") er negativ!");
+        }
+
+        if (til > tablengde) // til er utenfor tabellen
+        {
+            throw new IndexOutOfBoundsException("til(" + til + ") > antall(" + tablengde + ")");
+        }
+
+        if (fra > til) // fra er større enn til
+        {
+            throw new IllegalArgumentException("fra(" + fra + ") > til(" + til + ") - illegalt intervall!");
+        }
+    }
 
     public Liste<T> subliste(int fra, int til) {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        fratilKontroll(antall, fra, til);
+        DobbeltLenketListe<T> nyListe = new DobbeltLenketListe<>();
+        if(fra == til)return nyListe;
+        
+        Node<T> p = finnNode(fra);
+        nyListe.leggInn(p.verdi);
+        til = til-1;
+        while(fra < til){
+            p = p.neste;
+            nyListe.leggInn(p.verdi);
+            fra++;
+        }
+        return nyListe;
     }
 
     @Override
@@ -162,12 +191,12 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         Liste.super.indeksKontroll(indeks, false);
         Node<T> p = finnNode(indeks);
         T gammelverdi = p.verdi;
-        
-        if(nyverdi != null){
+
+        if (nyverdi != null) {
             p.verdi = nyverdi;
             endringer++;
         }
-        
+
         return gammelverdi;
     }
 

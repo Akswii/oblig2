@@ -12,9 +12,10 @@ package algdat_oblig2;
 public class Main {
 
     public static void main(String[] args) {
-        String[] s = {"Ole", null, "Per", "Kari", null, "Aksel", "Tommy"};
-        DobbeltLenketListe<String> liste = new DobbeltLenketListe<>(s);
-        System.out.println(liste.hent(4));
-        System.out.println(liste.toString());
+        Character[] c = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',};
+        DobbeltLenketListe<Character> liste = new DobbeltLenketListe<>(c);
+        System.out.println(liste.subliste(3, 8)); // [D, E, F, G, H]
+        System.out.println(liste.subliste(5, 5)); // []
+        System.out.println(liste.subliste(8, liste.antall()));
     }
 }
