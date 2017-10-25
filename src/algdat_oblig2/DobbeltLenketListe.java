@@ -210,7 +210,27 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public T fjern(int indeks) {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        Node<T> p = finnNode(indeks), nyHale, nyttHode, nyF, nyN;
+        T returverdi = p.verdi;
+        
+        if(indeks == 0){
+            nyttHode = hode.neste;
+            nyttHode.forrige = null;
+            hode = nyttHode;
+        }
+        else if(indeks > 0 && indeks < antall){
+            nyF = p.forrige; nyN = p.neste;
+            nyF.neste = nyN;
+            nyN.forrige = nyF;
+            
+        }
+        else if(indeks == antall) {
+            nyHale = hale.forrige;
+            nyHale.neste = null;
+            hale = nyHale;
+        }
+        
+        return returverdi;
     }
 
     @Override
