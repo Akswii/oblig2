@@ -47,18 +47,18 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     private Node<T> finnNode(int indeks) {
         int teller = 0;
         Node<T> p;
-        if (indeks < (antall / 2)) {
+        if (indeks <= (antall / 2)) {
             p = hode;
             while (teller < indeks && teller != indeks) {
                 p = p.neste;
                 teller++;
             }
         } else {
-            teller = antall;
+            teller = antall-1;
             p = hale;
 
             while (teller > indeks && teller != indeks) {
-                p = p.neste;
+                p = p.forrige;
                 teller--;
             }
         }
@@ -148,7 +148,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public T hent(int indeks) {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        Liste.super.indeksKontroll(indeks, false);
+        return finnNode(indeks).verdi;
     }
 
     @Override
