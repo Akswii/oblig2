@@ -119,12 +119,14 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     public Liste<T> subliste(int fra, int til) {
         fratilKontroll(antall, fra, til);
         DobbeltLenketListe<T> nyListe = new DobbeltLenketListe<>();
-        if(fra == til)return nyListe;
-        
+        if (fra == til) {
+            return nyListe;
+        }
+
         Node<T> p = finnNode(fra);
         nyListe.leggInn(p.verdi);
-        til = til-1;
-        while(fra < til){
+        til = til - 1;
+        while (fra < til) {
             p = p.neste;
             nyListe.leggInn(p.verdi);
             fra++;
@@ -167,7 +169,34 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public void leggInn(int indeks, T verdi) {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        Objects.requireNonNull(verdi, "Verdi er null");
+        Objects.requireNonNull(indeks, "Indeks er null");
+
+        if (indeks > antall) {
+            throw new IndexOutOfBoundsException("Indeks er større enn antall");
+        }
+        if (indeks < 0) {
+            throw new IndexOutOfBoundsException("Indeks mindre enn 0");
+        }
+        if (tom() || indeks == antall) {
+            leggInn(verdi);
+        } else if (indeks == 0) {
+            Node<T> n = new Node<>(verdi, null, hode);
+            hode.forrige = n;
+            hode = n;
+            antall++;
+            endringer++;
+        } else if (indeks > 0 && indeks < antall) {
+            Node<T> p = finnNode(indeks);
+            Node<T> n = new Node<>(verdi, null, null);
+            n.forrige = p.forrige;
+            p.forrige.neste = n;
+            n.neste = p;
+            p.forrige = n;
+            antall++;
+            endringer++;
+        }
+
     }
 
     @Override
@@ -182,15 +211,19 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
     @Override
-    public int indeksTil(T verdi) {       
-        for(int teller = 0;teller < antall; teller++){
-            if(hent(teller) == verdi) return teller;
+    public int indeksTil(T verdi) {
+        for (int teller = 0; teller < antall; teller++) {
+            if (hent(teller).equals(verdi)) {
+                return teller;
+            }
         }
         return -1;
     }
 
     @Override
     public T oppdater(int indeks, T nyverdi) {
+        Objects.requireNonNull(nyverdi, "Verdi er null");
+        Objects.requireNonNull(indeks, "Indeks er null");
         Liste.super.indeksKontroll(indeks, false);
         Node<T> p = finnNode(indeks);
         T gammelverdi = p.verdi;
