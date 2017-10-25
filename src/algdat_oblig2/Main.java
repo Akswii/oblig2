@@ -7,15 +7,10 @@ package algdat_oblig2;
 
 /**
  *
- * @author Aksel
+ * @author tomtr
  */
-public class Algdat_oblig2 {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+public class Main {
+    public static void main(String [] args){
+        Liste<String> liste = new DobbeltLenketListe<>();
     }
-    
 }
