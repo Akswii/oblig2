@@ -10,7 +10,11 @@ package algdat_oblig2;
  * @author tomtr
  */
 public class Main {
-    public static void main(String [] args){
-        Liste<String> liste = new DobbeltLenketListe<>();
+
+    public static void main(String[] args) {
+        String[] s = {"Ole", null, "Per", "Kari", null};
+        Liste<String> liste = new DobbeltLenketListe<>(s);
+        System.out.println(liste.antall() + " " + liste.tom());
+
     }
 }
