@@ -13,7 +13,17 @@ public class Main {
 
     public static void main(String[] args) {
         Integer[] c = {};
-        DobbeltLenketListe<Integer> liste = new DobbeltLenketListe<>(c);
+        DobbeltLenketListe<Integer> liste = new DobbeltLenketListe<>();
+
+        for (int i = 1; i <= 7; i++) {
+            liste.leggInn(i);
+        }
+        int i = 0;
+        while(i<liste.antall()){
+            liste.fjern(0);
+            i++;
+        }
+        
         System.out.println(liste.toString());
     }
 }

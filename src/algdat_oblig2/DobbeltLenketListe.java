@@ -238,43 +238,48 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public boolean fjern(T verdi) {
-        int indeks = 0;
+        /*int indeks = 0;
         Node<T> p = hode, nyHale, nyttHode, nyF, nyN;
         int i = 0;
-        for (; i < antall-1 && p.verdi != verdi; i++) {
-            indeks++;
+        if (i == indeks) {
+            return false;
         }
-        if(i == indeks)return false;
         if (indeks < 0 || indeks > antall - 1) {
             return false;
         }
-        System.out.println(indeks);
 
-        if (indeks == 0) {
-            nyttHode = hode.neste;
-            System.out.println("hei3");
-            nyttHode.forrige = null;
-            hode = nyttHode;
-            antall--;
-            return true;
-        } else if (indeks > 0 && indeks < antall - 1) {
-            nyF = p.forrige;
-            System.out.println("hei2");
-            nyN = p.neste;
-            nyF.neste = nyN;
-            nyN.forrige = nyF;
-            antall--;
-            return true;
+        while (indeks < antall) {
+            if (p.verdi == verdi) {
+                System.out.println("test");
+                if (indeks == 0) {
+                    nyttHode = hode.neste;
+                    System.out.println("hei3");
+                    nyttHode.forrige = null;
+                    hode = nyttHode;
+                    antall--;
+                    return true;
+                } else if (indeks > 0 && indeks < antall - 1) {
+                    nyF = p.forrige;
+                    System.out.println("hei2");
+                    nyN = p.neste;
+                    nyF.neste = nyN;
+                    nyN.forrige = nyF;
+                    antall--;
+                    return true;
 
-        } else if (indeks == antall - 1) {
-            nyHale = hale.forrige;
-            System.out.println("hei");
-            System.out.println(antall);
-            nyHale.neste = null;
-            hale = nyHale;
-            antall--;
-            return true;
+                } else if (indeks == antall - 1) {
+                    nyHale = hale.forrige;
+                    System.out.println("hei");
+                    System.out.println(antall);
+                    nyHale.neste = null;
+                    hale = nyHale;
+                    antall--;
+                    return true;
+                }
+            }
+            indeks++;
         }
+        System.out.println(indeks);*/
         return false;
     }
 
@@ -285,8 +290,12 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
         Node<T> p = finnNode(indeks), nyHale, nyttHode, nyF, nyN;
         T returverdi = p.verdi;
-
-        if (indeks == 0) {
+        if (indeks == 0 && antall == 1) {
+            hode.neste = hode.forrige = hale.neste = hode.forrige = null;
+            hode.verdi = null;
+            hode = hale = null;
+            antall--;
+        } else if (indeks == 0) {
             nyttHode = hode.neste;
             nyttHode.forrige = null;
             hode = nyttHode;
@@ -309,7 +318,14 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public void nullstill() {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+    }
+
+    public void nullstill2() {
+        Node<T> p = hode;
+        while (p != null) {
+            fjern(0);
+            p = p.neste;
+        }
     }
 
     @Override
