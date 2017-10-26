@@ -309,7 +309,19 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public void nullstill() {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        Node<T> p = hode;
+        Node<T> temp;
+        while(p != null){
+            p.verdi = null;
+            p.forrige = null;
+            temp = p.neste;
+            p.neste = null;
+            p = temp;
+            antall--;
+        }
+        hode.neste = null;
+        hale.forrige = null;
+        
     }
 
     @Override
