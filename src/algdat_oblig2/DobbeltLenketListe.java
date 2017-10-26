@@ -330,15 +330,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
         hode.neste = null;
         hale.forrige = null;
-    }
-
-    public void nullstill2() {
-        Node<T> p = hode;
-        while (p != null) {
-            fjern(0);
-            p = p.neste;
-        }
-    }
+    } //Fant at metode 1 var raskest.
 
     @Override
     public String toString() {

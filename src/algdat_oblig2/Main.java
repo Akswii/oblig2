@@ -14,16 +14,19 @@ public class Main {
     public static void main(String[] args) {
         Integer[] c = {};
         DobbeltLenketListe<Integer> liste = new DobbeltLenketListe<>();
+        DobbeltLenketListe<Integer> liste2 = new DobbeltLenketListe<>();
 
-        for (int i = 1; i <= 7; i++) {
-            liste.leggInn(i);
-        }
-        int i = 0;
-        while(i<liste.antall()){
-            liste.fjern(0);
-            i++;
-        }
+        for (int i = 1; i <= 999999; i++) liste.leggInn(i);
+        //for (int j = 1; j <= 999999; j++) liste2.leggInn(j);
         
-        System.out.println(liste.toString());
+        double tid = System.currentTimeMillis();
+        liste.nullstill2();
+        tid = System.currentTimeMillis() - tid;
+        System.out.println(tid);
+        
+        /*double tid2 = System.currentTimeMillis();
+        liste2.nullstill2();
+        tid2 = System.currentTimeMillis() - tid2;
+        System.out.println(tid2);*/
     }
 }

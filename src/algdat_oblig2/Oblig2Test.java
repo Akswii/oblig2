@@ -26,11 +26,7 @@ public class Oblig2Test
     antallFeil += oppgave3();
     antallFeil += oppgave4();
     antallFeil += oppgave5();
-<<<<<<< HEAD
     //antallFeil += oppgave6();
-=======
-  //  antallFeil += oppgave6();
->>>>>>> 9a3e6f93813ab4050f14d8d39c4f3c2767b5df65
     antallFeil += oppgave7();
     //antallFeil += oppgave8();
     //antallFeil += oppgave9();
