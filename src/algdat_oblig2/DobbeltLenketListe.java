@@ -382,7 +382,19 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
     public static <T> void sorter(Liste<T> liste, Comparator<? super T> c) {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        for (int n = liste.antall(); n > 0; n--) {
+            Iterator<T> iterator = liste.iterator();
+            int j = 0;
+            T denne_verdi = iterator.next();
+            for (int i = 1; i < n; i++) {
+                T verdi = iterator.next();
+                if (c.compare(verdi, denne_verdi) < 0) {
+                    j = i;
+                    denne_verdi = verdi;
+                }
+            }
+            liste.leggInn(liste.fjern(j));
+        }
     }
 
     @Override
