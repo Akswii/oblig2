@@ -7,7 +7,8 @@ package algdat_oblig2;
 
 /**
  *
- * @author Aksel
+ * Aksel Wiig - s232324
+ * Tommy Tran - s315573
  */
 /////////// DobbeltLenketListe ////////////////////////////////////
 import java.util.Comparator;
