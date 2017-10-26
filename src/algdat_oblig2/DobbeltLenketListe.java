@@ -77,18 +77,18 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         this();
         Objects.requireNonNull(a, "Tabellen er tom!");
 
-        // Finner den første i a som ikke er null
+        
         int i = 0;
         for (; i < a.length && a[i] == null; i++);
 
         if (i < a.length) {
-            Node<T> p = hode = new Node<>(a[i], null, null);  // den første noden
-            antall = 1;                                 // vi har minst en node
+            Node<T> p = hode = new Node<>(a[i], null, null);  
+            antall = 1;                                
             Node<T> temp;
             for (i++; i < a.length; i++) {
                 if (a[i] != null) {
                     temp = p;
-                    p = p.neste = new Node<>(a[i], p.forrige, null);   // en ny node
+                    p = p.neste = new Node<>(a[i], p.forrige, null);   
                     p.forrige = temp;
                     antall++;
                 }
@@ -237,7 +237,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
     @Override
-    public boolean fjern(T verdi) {
+    public boolean fjern(T verdi) {//fikk ikke til å fungerer, methoden under er vårt løsningsforslag
         int indeks = 0;
         Node<T> p = hode, nyHale, nyttHode, nyF, nyN;
         int i = 0;
@@ -247,10 +247,9 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         if (indeks < 0 || indeks > antall - 1) {
             return false;
         }
-
+      
         while (indeks < antall) {
             if (p.verdi.equals(verdi)) {
-                System.out.println("hei");
                 if (indeks == 0 && antall == 1) {
                     hode.neste = hode.forrige = hale.neste = hode.forrige = null;
                     hode.verdi = null;
@@ -335,7 +334,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
         hode.neste = null;
         hale.forrige = null;
-    } //Fant at metode 1 var raskest.
+    } //Forskjellene var minimale, fant at metode 1 var marginalt raskere.
 
     @Override
     public String toString() {
@@ -449,7 +448,37 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
         @Override
         public void remove() {
-            throw new UnsupportedOperationException("Ikke laget ennå!");
+            if (!fjernOK) {
+                throw new IllegalStateException("Kan ikke fjerne en verdi nÃ¥!");
+            }
+
+            if (iteratorendringer != endringer) {
+                throw new ConcurrentModificationException("Listen har blitt endret!");
+            }
+            fjernOK = false;
+
+            Node<T> p;
+            if (denne == null) {
+                p = hale;
+            } else {
+                p = denne.forrige;
+            }
+
+            if (p == hode) {
+                if (antall == 1) {
+                    hode = hale = null;
+                } else {
+                    (hode = hode.neste).forrige = null;
+                }
+            } else if (p == hale) {
+                (hale = hale.forrige).neste = null;
+            } else {
+                (p.forrige.neste = p.neste).forrige = p.forrige;
+            }
+            antall--;
+            endringer++;
+
+            iteratorendringer++;
         }
     } // DobbeltLenketListeIterator
 } // DobbeltLenketListe 
