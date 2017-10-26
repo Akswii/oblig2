@@ -7,8 +7,7 @@ package algdat_oblig2;
 
 /**
  *
- * Aksel Wiig - s232324
- * Tommy Tran - s315573
+ * Aksel Wiig - s232324 Tommy Tran - s315573
  */
 /////////// DobbeltLenketListe ////////////////////////////////////
 import java.util.Comparator;
@@ -239,7 +238,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public boolean fjern(T verdi) {
-        /*int indeks = 0;
+        int indeks = 0;
         Node<T> p = hode, nyHale, nyttHode, nyF, nyN;
         int i = 0;
         if (i == indeks) {
@@ -250,28 +249,29 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
 
         while (indeks < antall) {
-            if (p.verdi == verdi) {
-                System.out.println("test");
-                if (indeks == 0) {
+            if (p.verdi.equals(verdi)) {
+                System.out.println("hei");
+                if (indeks == 0 && antall == 1) {
+                    hode.neste = hode.forrige = hale.neste = hode.forrige = null;
+                    hode.verdi = null;
+                    hode = hale = null;
+                    antall--;
+                    return true;
+                } else if (indeks == 0) {
                     nyttHode = hode.neste;
-                    System.out.println("hei3");
                     nyttHode.forrige = null;
                     hode = nyttHode;
                     antall--;
                     return true;
                 } else if (indeks > 0 && indeks < antall - 1) {
                     nyF = p.forrige;
-                    System.out.println("hei2");
                     nyN = p.neste;
                     nyF.neste = nyN;
                     nyN.forrige = nyF;
                     antall--;
                     return true;
-
                 } else if (indeks == antall - 1) {
                     nyHale = hale.forrige;
-                    System.out.println("hei");
-                    System.out.println(antall);
                     nyHale.neste = null;
                     hale = nyHale;
                     antall--;
@@ -280,7 +280,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             }
             indeks++;
         }
-        System.out.println(indeks);*/
         return false;
     }
 
@@ -296,10 +295,12 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             hode.verdi = null;
             hode = hale = null;
             antall--;
+            endringer++;
         } else if (indeks == 0) {
             nyttHode = hode.neste;
             nyttHode.forrige = null;
             hode = nyttHode;
+            endringer++;
             antall--;
         } else if (indeks > 0 && indeks < antall - 1) {
             nyF = p.forrige;
@@ -307,11 +308,13 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             nyF.neste = nyN;
             nyN.forrige = nyF;
             antall--;
+            endringer++;
         } else if (indeks == antall - 1) {
             nyHale = hale.forrige;
             nyHale.neste = null;
             hale = nyHale;
             antall--;
+            endringer++;
         }
 
         return returverdi;
@@ -328,6 +331,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             p.neste = null;
             p = temp;
             antall--;
+            endringer++;
         }
         hode.neste = null;
         hale.forrige = null;
@@ -383,11 +387,12 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public Iterator<T> iterator() {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        return new DobbeltLenketListeIterator();
     }
 
     public Iterator<T> iterator(int indeks) {
-        throw new UnsupportedOperationException("Ikke laget ennå!");
+        indeksKontroll(indeks, false);
+        return new DobbeltLenketListeIterator(indeks);
     }
 
     private class DobbeltLenketListeIterator implements Iterator<T> {
@@ -403,7 +408,9 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
 
         private DobbeltLenketListeIterator(int indeks) {
-            throw new UnsupportedOperationException("Ikke laget ennå!");
+            denne = finnNode(indeks);
+            fjernOK = false;
+            iteratorendringer = endringer;
         }
 
         @Override
@@ -413,7 +420,19 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
         @Override
         public T next() {
-            throw new UnsupportedOperationException("Ikke laget ennå!");
+            if (!(iteratorendringer == endringer)) {
+                throw new ConcurrentModificationException("Iteratorendringer != endringer");
+            }
+            if (!hasNext()) {
+                throw new NoSuchElementException("Neste element eksisterer ikke");
+            }
+
+            T denne_verdi = denne.verdi;
+            denne = denne.neste;
+
+            fjernOK = true;
+
+            return denne_verdi;
         }
 
         @Override
